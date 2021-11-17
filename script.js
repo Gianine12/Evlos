@@ -65,8 +65,14 @@ document.getElementById("buttonRetirar").addEventListener('click',function() {
     }    
 },false);
 
+function limpaObject(){
+    for (var x in aux) delete aux[x];
+}
+
 function saque(notas,ret,valorInicial){
     document.getElementById("result").textContent = ""
+    limpaObject()
+    
     Object.keys(notas)
         .reverse()
         .map((k) => {
@@ -76,7 +82,6 @@ function saque(notas,ret,valorInicial){
                         if(ret >= k){
                             ret = ret -k
                             notas[k] = notas[k] -1
-                            console.log(notas[k])
                         
                             if(aux[k] === undefined ){
                                 aux[k] = 1
@@ -91,5 +96,16 @@ function saque(notas,ret,valorInicial){
         saldo = saldo - valorInicial
 
     document.getElementById("saldo").innerHTML = "Saldo atual R$ " + saldo
+    imprimirNotas()
 }
 
+function imprimirNotas(){
+    let notasImprimidas = ""
+    Object.keys(aux)
+        .map((k)=>{
+            
+            notasImprimidas = [ ...notasImprimidas, "Valor:" + k + " Quantidade:" + aux[k]]
+        })
+        
+        document.getElementById("notas").innerHTML = notasImprimidas
+}
